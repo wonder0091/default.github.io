@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bypx.synthesis.dao.PhotoInterface">
+    <select id="queryPhoto" parameterType="User" resultMap="common">
+        SELECT id_,image_name,image_link,DATE_FORMAT(add_time,'%Y-%m-%d') AS add_time FROM images where 1=1
+    </select>
+    <resultMap id="common" type="User">
+        <result column="image_link" property="photoUrl"></result>
+        <result column="image_name" property="name"></result>
+        <result column="add_time" property="date"></result>
+    </resultMap>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bypx.synthesis.dao.LoginInterface">
+    <select id="login" parameterType="User" resultMap="common">
+        select * from user where name=#{account} and password=#{pass}
+    </select>
+
+    <resultMap id="common" type="User">
+        <result column="name" property="account"></result>
+        <result column="password" property="pass"></result>
+        <result column="id" property="id"></result>
+    </resultMap>
+
+    <select id="queryUidByUname" resultMap="c">
+        select id from user where name=#{account}
+    </select>
+    <resultMap id="c" type="User">
+        <result column="id" property="id"></result>
+    </resultMap>
+
+</mapper>

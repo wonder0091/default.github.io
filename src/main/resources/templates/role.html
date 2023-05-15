@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrapValidator.css">
+    <link rel="stylesheet" href="../static/ztree/css/zTreeStyle/zTreeStyle.css">
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrapValidator.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../static/ztree/js/jquery.ztree.all.js"></script>
+    <script src="../static/js/role.js"></script>
+
+    <style>
+        .modal-body .input-group{
+            margin-top: 10px;
+        }
+        #imglist .list-group-item{
+            /*display: flex;*/
+            /*justify-content: center;*/
+            display: inline-block;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container" style="margin-top: 20px">
+    <!--  搜索栏  -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">查询条件</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="RoleName">角色名：</label>
+                    <input type="text" class="form-control" id="RoleName" style="width: 650px;margin-left: 10px;">
+                </div>
+                <button type="button" class="btn btn-default" onclick="search_ok()">查询</button>
+            </form>
+        </div>
+    </div>
+    <table id="table">
+    </table>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="toolbar" class="btn-group" role="group" aria-label="..." style="margin-bottom: 10px">
+                <button type="button" class="btn btn-info" onclick="openModal()">新增角色</button>
+<!--                <button type="button" class="btn btn-danger" onclick="delAll()">批量删除</button>-->
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- 新增 -->
+<div class="modal fade"id="openModal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新增角色</h4>
+            </div>
+
+            <div class="modal-body">
+                <form class="form-horizontal" id="addForm">
+                    <input type="hidden" class="form-control" id="formId">
+                    <div class="form-group">
+                        <label for="addName" class="col-sm-2 control-label">角色名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addFlag" class="col-sm-2 control-label">标识：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addFlag">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="addRole()">保存</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 新增END -->
+<!-- 编辑 -->
+<div class="modal fade"id="editModal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑角色</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="editForm">
+                    <input type="hidden" class="form-control" id="editId">
+                    <div class="form-group">
+                        <label for="editName" class="col-sm-2 control-label">角色名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFlag" class="col-sm-2 control-label">标识：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editFlag">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="editRole()">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 编辑END -->
+<!-- 关联 -->
+<div class="modal fade" id="menuListModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="assRoleName">关联菜单</h4>
+            </div>
+            <div class="modal-body">
+                <ul id="chooseMenu" class="ztree"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="subAssMenu()">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 关联END -->
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bypx.synthesis.dao.MenuInterface">
+
+    <insert id="add" parameterType="Menu">
+        insert into jxc_menu(id_,text_,order_,pId,url_,icon_) values(#{id},#{text},#{order},#{pId},#{url},#{icon})
+    </insert>
+    <update id="edit" parameterType="Menu">
+        update jxc_menu set text_=#{text},url_=#{url},icon_=#{icon},order_=#{order} where id_=#{id}
+    </update>
+
+    <select id="query"  resultMap="menu">
+        select * from jxc_menu order by order_ asc
+    </select>
+    <resultMap id="menu" type="Menu">
+        <result column="text_" property="text"></result>
+        <result column="url_" property="url"></result>
+        <result column="icon_" property="icon"></result>
+        <result column="order_" property="order"></result>
+        <result column="pId" property="pId"></result>
+        <result column="id_" property="id"></result>
+        <result column="flag_" property="flag"></result>
+    </resultMap>
+    <select id="queryRidByUid" resultMap="queryRid">
+     SELECT role_id_ FROM jxc_role_user WHERE user_id_=#{id}
+    </select>
+    <resultMap id="queryRid" type="Menu">
+        <result column="role_id_" property="id"></result>
+    </resultMap>
+
+    <select id="querys"  resultMap="dtmenu">
+  SELECT jxc_menu.id_,text_,order_,pId,icon_,url_,flag_ FROM (SELECT * FROM jxc_menu_role  WHERE role_id_ in (#{id})) mr
+        LEFT JOIN jxc_menu ON  jxc_menu.id_ = mr.menu_id_ group by text_
+    order by order_ asc
+    </select>
+
+    <resultMap id="dtmenu" type="Menu">
+        <result column="id_" property="id"></result>
+        <result column="text_" property="text"></result>
+        <result column="url_" property="url"></result>
+        <result column="icon_" property="icon"></result>
+        <result column="order_" property="order"></result>
+        <result column="pId" property="pId"></result>
+        <result column="flag_" property="flag"></result>
+    </resultMap>
+
+    <select id="queryPid"  resultMap="qp">
+        select pId from jxc_menu where pId=#{id}
+    </select>
+    <resultMap id="qp" type="Menu">
+        <result column="pId" property="pId"></result>
+        <result column="id_" property="id"></result>
+    </resultMap>
+
+    <delete id="delete" parameterType="Menu">
+        delete  from jxc_menu where id_=#{id}
+    </delete>
+    <delete id="delMR">
+        delete  from jxc_menu_role where menu_id_=#{id}
+    </delete>
+
+
+
+</mapper>

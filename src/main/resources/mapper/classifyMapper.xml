@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bypx.synthesis.dao.classifyInterface">
+
+    <insert id="add" parameterType="Classify">
+        insert into goods_classify(name,Sort,pId) values(#{name},#{Sort},#{pId})
+    </insert>
+    <update id="edit" parameterType="Classify">
+        update goods_classify set name=#{name},Sort=#{Sort},pId=#{pId} where id_=#{id}
+    </update>
+    <select id="query">
+        select * from goods_classify
+    </select>
+    <select id="show" parameterType="Classify" resultMap="show">
+        select name,Sort from goods_classify where 1=1
+    </select>
+
+    <delete id="delete" parameterType="Classify">
+        delete  from goods_classify where id_=#{id}
+    </delete>
+    <resultMap id="show" type="Classify">
+        <result column="name" property="name"></result>
+        <result column="Sort" property="Sort"></result>
+    </resultMap>
+
+</mapper>

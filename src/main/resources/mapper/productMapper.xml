@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bypx.synthesis.dao.ProductInterface">
+    <insert id="upProduct" parameterType="Product">
+        insert into goods(name_,img_src,goods_cate,Price_,total_,Sort_,Freight_,Status_,goods_desc)
+          values(#{title},#{photo},#{name},#{Price},#{total},#{Sort},#{Freight},#{Status},#{goods})
+    </insert>
+
+    <delete id="delProduct" parameterType="String">
+        delete from goods where Sort_=#{Sort}
+    </delete>
+
+    <update id="editProduct" parameterType="Product">
+        update goods set name_=#{title},img_src=#{photo},goods_cate=#{name},Price_=#{Price},
+            total_=#{total},Freight_=#{Freight},Status_=#{Status},goods_desc=#{goods} where Sort_=#{Sort}
+    </update>
+
+    <select id="info" parameterType="String" resultMap="con">
+        select name_,img_src,goods_cate,Price_,total_,Sort_,Freight_,Status_,goods_desc from goods where Sort_=#{Sort}
+    </select>
+
+    <resultMap id="con" type="Product">
+        <result column="name_" property="title"></result>
+        <result column="img_src" property="photo"></result>
+        <result column="goods_cate" property="name"></result>
+        <result column="Price_" property="Price"></result>
+        <result column="total_" property="total"></result>
+        <result column="Freight_" property="Freight"></result>
+        <result column="Status_" property="Status"></result>
+        <result column="Sort_" property="Sort"></result>
+        <result column="goods_desc" property="goods"></result>
+    </resultMap>
+
+    <select id="showImg" parameterType="Product" resultMap="common">
+        select image_link from images where 1=1 order by add_time asc
+    </select>
+
+    <resultMap id="common" type="Product">
+        <result column="image_link" property="photo"></result>
+    </resultMap>
+
+</mapper>

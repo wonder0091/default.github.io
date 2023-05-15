@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 每一个xml只能一对一 对应interface文件
+-->
+<mapper namespace="com.bypx.synthesis.dao.UserInterface">
+    
+    <insert id="add" parameterType="User">
+        insert into user(id,name,password,photo_url,create_time)
+                       values(#{id},#{account},#{pass},#{photoUrl},#{createTime})
+    </insert>
+    <insert id="addUser" parameterType="User">
+        insert into user(id,name,nickName,password,photo_url,birthday,create_time)
+                       values(#{id},#{account},#{nickName},#{pass},#{photoUrl},#{birth},#{createTime})
+    </insert>
+
+    <insert id="signIn" parameterType="User">
+        insert into attendance(user_id,sign_in,create_time_)
+        values(#{account},#{datehm},#{date})
+    </insert>
+
+    <insert id="ass" parameterType="UserRole">
+        insert into jxc_role_user(id_,user_id_,role_id_)
+                       values(#{id},#{userId},#{roleName})
+    </insert>
+    <delete id="deleUserRole" parameterType="String">
+        delete from jxc_role_user where user_id_=#{id}
+    </delete>
+    <delete id="delete" parameterType="String">
+        delete from user where id=#{id}
+    </delete>
+    <delete id="delRoleByUid">
+        delete from jxc_role_user WHERE user_id_=#{userId}
+    </delete>
+    <update id="update" parameterType="Map">
+         update user set name=#{account},password=#{pass}where id=#{id}
+    </update>
+    <update id="signOut" parameterType="User">
+        update attendance set sign_out=#{signOut} where user_id=#{account}
+    </update>
+
+    <update id="resetPass" parameterType="String">
+        update user set password=123456 where id=#{id}
+    </update>
+    <update id="editUser">
+        update user set name=#{account},nickName=#{nickName} where id=#{id}
+    </update>
+
+
+    <select id="queryAssRole" resultMap="css" parameterType="UserRole">
+        select  role_id_ from jxc_role_user where user_id_ = #{id}
+    </select>
+
+    <resultMap id="css" type="UserRole">
+        <result column="id_" property="id"></result>
+        <result column="role_id_" property="roleId"></result>
+    </resultMap>
+
+
+    <select id="query" parameterType="User" resultMap="user">
+        select id,name,password,nickName,photo_url,create_time,birthday from user
+
+        <where>
+
+            <if test="name!=null and name!=''">
+                and name like '%${name}%'
+            </if>
+            <if test="nickName!=null and nickName!=''">
+                and nickName like '%${nickName}%'
+            </if>
+            <if test="pass!=null and pass!=''">
+                and password=#{pass}
+            </if>
+
+        </where>
+        order by create_time desc
+    </select>
+    <resultMap id="user" type="User">
+        <result column="id" property="id"></result>
+        <result column="name" property="name"></result>
+        <result column="password" property="pass"></result>
+        <result column="nickName" property="nickName"></result>
+        <result column="photo_url" property="photoUrl"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="birthday" property="birth"></result>
+    </resultMap>
+
+    <select id="select" resultType="User">
+        select * from user
+    </select>
+
+    <select id="show" parameterType="User" resultMap="notice"  >
+        SELECT title_,content,DATE_FORMAT(create_time,'%Y-%m-%d') AS create_time  FROM notice WHERE  id_=(SELECT MAX(id_) FROM notice ) ;
+    </select>
+
+    <resultMap id="notice" type="User">
+        <result column="title_" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="create_time" property="createTime"></result>
+    </resultMap>
+
+    <select id="select2" resultMap="common">
+        select * from user
+        <where>
+
+   <!--     mybatis 两种取值方式:
+            1. #{java对象属性名} 常用，一般用它，对于String类型会自动加引号
+            2. ${}特殊场景才能用，不能乱用，产生安全漏洞，sql注入
+                只能在like，group by，order by，对于String不会加引号
+                -->
+
+            <if test="account !=null and account!=''">
+                and name like '%${account}%'
+            </if>
+
+            <if test="pass !=null and pass!=''">
+                and password =#{pass}
+            </if>
+
+            <if test="id !=null and id!=''">
+
+                <!--
+                    xml里有一些特殊字符不能使用
+                    1.使用转义字符
+                    2.使用<![CDATA[  语句  ]]>
+                    set foreach include choose
+                 -->
+               <![CDATA[ and id>1 and id<9 ]]>
+
+            </if>
+        </where>
+    </select>
+    
+    <resultMap id="common" type="User">
+        <id column="id" property="id"></id>
+        <result column="name" property="account"></result>
+        <result column="password" property="pass"></result>
+    </resultMap>
+
+    <select id="getAccount" parameterType="String" resultMap="isExist">
+        select id,name,password,photo_url,create_time from user where id=#{id}
+    </select>
+    <resultMap id="isExist" type="User">
+        <id column="id" property="id"></id>
+        <result column="name" property="account"></result>
+        <result column="password" property="pass"></result>
+        <result column="photo_url" property="photoUrl"></result>
+        <result column="create_time" property="createTime"></result>
+    </resultMap>
+    <select id="getReAccount" parameterType="String" resultMap="ReAcc">
+        select id,name,password,photo_url,create_time from user where name=#{account}
+    </select>
+    <resultMap id="ReAcc" type="User">
+        <id column="id" property="id"></id>
+        <result column="name" property="account"></result>
+        <result column="password" property="pass"></result>
+        <result column="photo_url" property="photoUrl"></result>
+        <result column="create_time" property="createTime"></result>
+    </resultMap>
+
+    <select id="getNick" parameterType="String" resultMap="getNick">
+        select id,nickName from user where id=#{id}
+    </select>
+    <resultMap id="getNick" type="User">
+        <id column="id" property="id"></id>
+        <result column="nickName" property="nickName"></result>
+    </resultMap>
+
+    <select id="getReNick" parameterType="String" resultMap="ReNick">
+        select id,nickName from user where nickName=#{nickName}
+    </select>
+    <resultMap id="ReNick" type="User">
+        <id column="id" property="id"></id>
+        <result column="nickName" property="nickName"></result>
+    </resultMap>
+</mapper>

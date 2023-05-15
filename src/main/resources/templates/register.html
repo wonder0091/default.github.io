@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Register</title>
+    <link rel="icon" href="../static/imagese/logo-ico.png" type="image/x-icon">
+    <style>
+        body{
+            background-image: url(../static/imagese/photo.jpg);
+            background-repeat: no-repeat;
+            background-size:100%;
+            background-position: 0px -50px;
+        }
+        #login-box{
+            background-color: #00000068;
+            border-radius: 13px;
+            text-align: center;
+            margin: 0px auto;
+            margin-top: 80px;
+            width: 350px;
+            height: 455px;
+        }
+
+
+        #login-box .input-box{
+            margin-top: 25px;
+        }
+        #login-box .input-box input{
+            border: none;
+            background: none;
+            border-bottom: #FFFFFF 2px solid;
+            padding: 5px 10px;
+            outline: none;
+            color: #FFFFFF;
+        }
+
+        #login-box button{
+            line-height:30px;
+            margin-top: 18px;
+            width: 130px;
+            height: 30px;
+            border-radius:13px ;
+            outline: none;
+            border: none;
+            background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+            color: #FFFFFF;
+        }
+
+        #login-box button:hover{
+            background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+        }
+        #login-box .input-box i{
+            color: #FFFFFF;
+        }
+
+        #photoImg{
+            background-image: url(../static/imagese/photo.jpg);
+            border: 0px solid #408AEC;
+            border-radius: 100%;
+            width: 75px;
+            height: 75px;
+            background-size: 75px 75px;
+            margin-top: -15px;
+            align-items: center;
+
+        }
+
+        .file-box{ position:relative;width:340px}
+        .btn{
+            background-color:#FFF;
+            border:1px solid #CDCDCD;
+            width: 120px;
+            height: 32px;
+            margin-top: -10px;
+            margin-left: 10px;
+            border-radius:12px ;
+            outline: none;
+            border: none;
+            background-image: linear-gradient(to right, #ebbba7 0%, #cfc7f8 100%);
+            color: whitesmoke;
+
+        }
+
+        #photo{ position:absolute; top:0; right:80px; height:24px; opacity:0;width:260px}
+
+       </style>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/register.js"></script>
+
+</head>
+
+<body>
+
+    <div id="login-box">
+       <h1 style="padding-top: 60px;text-align: center"> <img id="photoImg" align="center"></h1>
+        <div class="file-box">
+            <input type="button" value="上传头像" class="btn">
+            <input type="file" id="photo">
+        </div>
+        <form>
+        <div class="input-box">
+            <span style="font-family: Arial;font-weight: bold;color: #9fb7c2" > 帐号:  </span>
+
+            <input type="text" id="account">
+        </div>
+
+      <div class="input-box">
+
+         <span style="font-family: 微雅软黑;font-weight: bold;color: #9fb7c2" > 密码:  </span>
+          <input type="password" id="password">
+        </div>
+
+            <div class="input-box">
+
+                <span style="font-family: 微雅软黑;font-weight: bold;color: #9fb7c2;margin-left: -30px" >确认密码:  </span>
+                <input type="password" id="repassword"/>
+            </div>
+
+            <button type="button" onclick="uploadfile()">注册</button><br>
+        </form>
+        <button type="button" onclick="op()">登录</button>
+    </div>
+
+
+</body>
+</html>

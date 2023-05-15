@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>后台管理系统</title>
+    <link rel="icon" href="../static/imagese/logo-ico.png" type="image/x-icon">
+    <style type="text/css">
+        body {
+            font-size: 12px;
+        }
+
+        .nav > li > a {
+            padding: 5px 10px;
+        }
+
+        .tab-content {
+            padding-top: 3px;
+        }
+
+        #box1{width: 88%;height: 200px;border: deepskyblue 2px solid;border-radius: 10px;}
+        #hdr{width: 100%;height: 67px;background-color:skyblue;border: 0;border-radius: 7px;color: #0080FF;font-size: large;}
+        #hdr-son{margin-left: 15px;line-height: 67px;}
+
+        #box2{width: 88%;height: 200px;border:coral 2px solid;border-radius: 10px;margin-top: 30px}
+        #box2-son{margin-left: 15px}
+        #hd{width: 100%;height: 67px;background-color:rgb(252,248,212);border: 0;border-radius: 7px;color: orange;font-size: large;}
+        #hd-son{margin-left: 15px;line-height: 67px;}
+
+        #inBtn{width: 80px;height: 40px;outline: 0px;background-color: #42a8e1;color: whitesmoke;margin-top: 40px;margin-left:50px;float: left;border: 0;border-radius: 10px;}
+        #outBtn{width: 80px;height: 40px;outline: 0px;background-color: #42a8e1;color: whitesmoke;margin-top: 40px;margin-right: 50px;float: right;border: 0;border-radius: 10px;}
+
+
+
+    </style>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/sidebar-menu/sidebar-menu.css">
+    <link rel="stylesheet" href="../static/ztree/css/zTreeStyle/zTreeStyle.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="/static/sidebar-menu/sidebar-menu.js"></script>
+    <script src="/static/bootstrap-3.3.7/js/bootstrap-tab.js"></script>
+    <script src="../static/ztree/js/jquery.ztree.all.js"></script>
+    <script src="../static/js/index.js"></script>
+</head>
+<body>
+<div class="navbar navbar-default" id="navbar">
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    <i class="icon-leaf"></i>
+                    后台管理系统
+                </small>
+            </a>
+        </div>
+
+        <div class="navbar-header pull-right" role="navigation">
+            <div style="background-color: #579ec8 !important; color: #fff; height:45px; line-height:45px; margin-right: 50px;">
+                &nbsp;&nbsp;   <span id="spt"></span>   &nbsp;&nbsp;
+                <a href="/login" style="color: #fff;">
+                    <i class="icon-off"></i>
+                    退出
+                </a>&nbsp;&nbsp;
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="main-container" id="main-container">
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+        <div class="sidebar" id="sidebar">
+            <ul class="nav nav-list" id="menu"></ul>
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12" style="padding-left:5px;">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active"><a href="#Index" role="tab" data-toggle="tab">首页</a></li>
+                        </ul>
+                        <div class="tab-content" style="height:865px">
+                            <div role="tabpanel" class="tab-pane active" id="Index" style="height:100%">
+                                <h1>欢迎使用进销存管理系统</h1>
+<!--                              <div id="box1">-->
+<!--                                  <div id="hdr"><p id="hdr-son">考勤</p></div>-->
+<!--                                  <button type="button" id="inBtn" onclick="signIn()">签到</button>-->
+<!--                                  <button type="button" id="outBtn" onclick="signOut()">签退</button>-->
+<!--                              </div>-->
+
+<!--                                <div id="box2">-->
+<!--                                    <div id="hd"><p id="hd-son">公司公告</p></div>-->
+<!--                                    <div id="box2-son">-->
+<!--                                        <h3 id="ptitle"></h3>-->
+<!--                                        <p id="content"></p>-->
+<!--                                        <p id="msg"></p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    // $(function () {
+    //     $('#menu').sidebarMenu({
+    //         data: [{
+    //             id: '1',
+    //             text: '系统管理',
+    //             icon: 'icon-cog',
+    //             url: '',//点击菜单要打开的页面，如果是一级菜单，url要为空
+    //             menus: [{
+    //                 id: '11',
+    //                 text: '用户管理',
+    //                 icon: 'icon-glass',
+    //                 url: '/user'
+    //             },{
+    //                 id: '12',
+    //                 text: '角色管理',
+    //                 icon: 'icon-glass',
+    //                 url: '/role'
+    //             },{
+    //                 id: '13',
+    //                 text: '材料类别',
+    //                 icon: 'icon-glass',
+    //                 url: '/type'
+    //             },{
+    //                 id: '14',
+    //                 text: '菜单管理',
+    //                 icon: 'icon-glass',
+    //                 url: '/menu'
+    //             }]
+    //         },
+    //             {
+    //                 id: '2',
+    //                 text: '出入库管理',
+    //                 icon: 'icon-cog',
+    //                 url: '',//点击菜单要打开的页面，如果是一级菜单，url要为空
+    //                 menus: [{
+    //                     id: '21',
+    //                     text: '库存汇总',
+    //                     icon: 'icon-glass',
+    //                     url: '/products'
+    //                 },{
+    //                     id: '22',
+    //                     text: '出库单',
+    //                     icon: 'icon-glass',
+    //                     url: '/outbound'
+    //                 },{
+    //                     id: '23',
+    //                     text: '单据审核',
+    //                     icon: 'icon-glass',
+    //                     url: '/examine'
+    //                 },{
+    //                     id: '24',
+    //                     text: '入库单',
+    //                     icon: 'icon-glass',
+    //                     url: '/warehousing'
+    //                 }]
+    //             }
+    //          ]
+    //     });
+    // });
+
+</script>
+
+<script language="javascript">
+    //防止页面后退
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
+</script>
+
+<script src="/static/ace/ace.min.js"></script>
+<script src="/static/ace/ace-extra.min.js"></script>
+</body>
+</html>

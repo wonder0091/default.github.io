@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公司公告</title>
+
+
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="../static/font-awesome/css/font-awesome.css">
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.22.0/moment-with-locales.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+    <script src="../static/js/attendance.js"></script>
+    <style>
+        /*table td{*/
+        /*    display:block;             !*内联对象需加*!*/
+
+        /*    width:31em;*/
+
+        /*    word-break:keep-all;       !* 不换行 *!*/
+
+        /*    white-space:nowrap;        !* 不换行 *!*/
+
+        /*    overflow:hidden;           !* 内容超出宽度时隐藏超出部分的内容 *!*/
+
+        /*    text-overflow:ellipsis;    !*溢出时显示省略标记...；需与overflow:hidden;一起使用*!*/
+        /*}*/
+        .myrow {
+            display: flex;
+            flex-direction: row;
+            /*margin-left:1em;*/
+        }
+
+    </style>
+
+
+</head>
+<body>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">查询条件</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="datetimepicker1">月份  </label>
+<!--                    <input  type="text" class="form-control" id="inputName" style="margin-left: 10px;">-->
+
+                    <div class="form-group ">
+                        <div class="myrow">
+                            <div class='input-group date' style="width: 14em;" >
+                                <input style="margin-left: 10px"; type='text' class="timeInput form-control" id='datetimepicker1'/>
+<!--                                <span class="input-group-addon">-->
+<!--                                <span class="glyphicon glyphicon-calendar"></span>-->
+<!--                                </span>-->
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--                <div class="form-group">-->
+                <!--                    <label for="inputPass">密码：</label>-->
+                <!--                    <input type="text" class="form-control" id="inputPass">-->
+                <!--                </div>-->
+                <button type="button" class="btn btn-default" onclick="tableQuery()" style="margin-left: 30px;background-color: #2b7dbc;color: snow;border: 0">查询</button>
+            </form>
+        </div>
+    </div>
+    <div id="toolbar">
+        <!--        <button class="btn btn-default" type="button" onclick="openAdd()">-->
+        <!--            <span class="glyphicon glyphicon-plus"></span>-->
+        <!--        </button>-->
+    </div>
+    <table id="table"></table>
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="formTitle">Modal title</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div id="formContent" style="height: 300px"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!--                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                    <!--                    <button type="button" class="btn btn-primary" onclick="dataSub()">提交</button>-->
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div id="delModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    确认是否删除数据？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+                    <button type="button" class="btn btn-primary" onclick="dataDel()">是</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+
+<script>
+    $(function() {
+        $('#form1').hide();
+        var picker1 = $('#datetimepicker1').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn'),
+
+        });
+
+    });
+    $('#datetimepicker1').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: moment.locale('zh-cn'),
+        defaultDate: ""
+    });
+
+</script>
+
+
+</body>
+</html>

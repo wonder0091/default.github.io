@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrapValidator.css">
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrapValidator.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../static/js/product.js"></script>
+
+    <style>
+        .modal-body .input-group{
+            margin-top: 10px;
+        }
+       #imglist .list-group-item{
+           /*display: flex;*/
+           /*justify-content: center;*/
+           display: inline-block;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container" style="margin-top: 20px">
+    <!--  搜索栏  -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="toolbar" class="btn-group" role="group" aria-label="..." style="margin-bottom: 10px">
+                <button type="button" class="btn btn-info" onclick="openModal()">添加</button>
+                <button type="button" class="btn btn-danger" onclick="delAll()">批量删除</button>
+            </div>
+            <table id="table">
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- 新增 -->
+<div class="modal fade"id="openModal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">添加商品</h4>
+            </div>
+
+            <div class="modal-body">
+                <form class="form-horizontal" id="addForm">
+                <div class="input-group">
+                    <span class="input-group-addon">标题</span>
+                    <input type="text" id="pTitle" class="form-control" placeholder="请输入标题" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon">图片</span>
+                    <input type="text" class="form-control"  placeholder="请选择图片" id="upImg" readonly>
+                <span class="input-group-addon">
+<!--                    <a style="text-decoration: none;cursor: pointer" onclick="$('input[id=upImg]').click();">上传图片</a>-->
+                    <a style="text-decoration: none;cursor: pointer" onclick="imgCtrl();">上传图片</a>
+
+               </span>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon">商品类型</span>
+                    <input type="text" id="pName" class="form-control" aria-label="Amount (to the nearest dollar)">
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon">价格</span>
+                    <input type="text" id="pPrice" class="form-control" placeholder="价格"  width="80px" style="margin-right:5px ">
+                    <span class="input-group-addon">库存</span>
+                    <input type="text" id="pTotal" class="form-control" placeholder="库存"  width="80px" style="margin-right:5px ">
+                    <span class="input-group-addon" >序号</span>
+                    <input type="text" id="pSort"class="form-control" placeholder="序号"  width="80px"style="margin-right:5px ">
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                      快递费
+                  </span>
+                        <input type="text" id="pFreight" class="form-control" placeholder="请填写快递费">
+                </div><!-- /input-group -->
+
+                    <div class="input-group">
+                        <span class="input-group-addon">是否上架</span>
+                        <input type="text" class="form-control" readonly>
+                        <span class="input-group-addon">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadios" id="pYes" value="option1" style="margin-right: 330px">
+                                       是
+                                    </label>
+
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadios" id="pNo" value="option2" style="float:left;">
+                                        否
+                                    </label>
+                        </span>
+                        </div>
+
+                <label for="pMsg" style="margin-top: 10px">详情</label>
+                    <textarea class="form-control" rows="6" id="pMsg"></textarea>
+                </form>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="addProduct()">保存</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 新增END -->
+<!-- 编辑 -->
+<div class="modal fade"id="editModal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑商品</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="editForm">
+                    <div class="input-group">
+                        <span class="input-group-addon">标题</span>
+                        <input type="text" id="epTitle" class="form-control" placeholder="请输入标题" aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">图片</span>
+                        <input type="text" class="form-control"  placeholder="修改图片地址" id="eupImg">
+                        <span class="input-group-addon">
+<!--                      <input type="file" value="选择图片" id="eupImg" style="display: none">-->
+<!--                    <a style="text-decoration: none;cursor: pointer" onclick="$('input[id=eupImg]').click();">上传图片</a>-->
+                        <a style="text-decoration: none;cursor: pointer" onclick="imgCtrl();">上传图片</a>
+
+               </span>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">商品类型</span>
+                        <input type="text" id="epName" class="form-control" aria-label="Amount (to the nearest dollar)">
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">价格</span>
+                        <input type="text" id="epPrice" class="form-control" placeholder="价格"  width="80px" style="margin-right:5px ">
+                        <span class="input-group-addon">库存</span>
+                        <input type="text" id="epTotal" class="form-control" placeholder="库存"  width="80px" style="margin-right:5px ">
+                        <span class="input-group-addon" >序号</span>
+                        <input type="text" id="epSort"class="form-control" placeholder="序号"  width="80px"style="margin-right:5px " readonly>
+                    </div>
+                    <div class="input-group">
+                  <span class="input-group-addon">
+                      快递费
+                  </span>
+                        <input type="text" id="epFreight" class="form-control" placeholder="请填写快递费">
+                    </div><!-- /input-group -->
+
+                    <div class="input-group">
+                        <span class="input-group-addon">是否上架</span>
+                        <input type="text" class="form-control" readonly>
+                        <span class="input-group-addon">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadios" id="epYes" value="option1" style="margin-right: 330px">
+                                       是
+                                    </label>
+
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadios" id="epNo" value="option2" style="float:left;">
+                                        否
+                                    </label>
+                        </span>
+                    </div>
+
+                    <label for="epMsg" style="margin-top: 10px">详情</label>
+                    <textarea class="form-control" rows="6" id="epMsg"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="editProduct()">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 编辑END -->
+<!-- 图片管理 -->
+<div class="modal fade" id="imgModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">选择图片</h4>
+            </div>
+            <div class="modal-body">
+                <div class="list-group"id="imglist">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="saveSrc(imgUrl)">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 图片管理END -->
+
+</body>
+</html>

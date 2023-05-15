@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bypx.synthesis.dao.TypeInterface">
+
+    <insert id="add" parameterType="Type">
+        insert into jxc_type(id_,name_,p_id_,create_time_) values(#{id},#{name},#{pId},#{createTime})
+    </insert>
+    <update id="edit" parameterType="Type">
+        update jxc_type set name_=#{name} where id_=#{id}
+    </update>
+    <select id="query"  resultMap="type">
+        select * from jxc_type
+    </select>
+    <resultMap id="type" type="Type">
+        <result column="name_" property="name"></result>
+        <result column="create_time_" property="createTime"></result>
+        <result column="p_id_" property="pId"></result>
+        <result column="id_" property="id"></result>
+    </resultMap>
+
+    <select id="show" parameterType="Type" resultMap="show">
+        select name_ from jxc_type where 1=1
+    </select>
+    <select id="queryPid"  parameterType="String" resultMap="qp">
+        select p_id_ from jxc_type where p_id_=#{id}
+    </select>
+    <resultMap id="qp" type="Type">
+        <result column="p_id_" property="pId"></result>
+        <result column="id_" property="id"></result>
+    </resultMap>
+
+
+    <delete id="delete" parameterType="Type">
+        delete  from jxc_type where id_=#{id}
+    </delete>
+    <resultMap id="show" type="Type">
+        <result column="name_" property="text"></result>
+    </resultMap>
+
+</mapper>

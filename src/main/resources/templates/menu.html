@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/ztree/css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrapValidator.css">
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrapValidator.js"></script>
+    <script src="../static/bootstrap-3.3.7/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../static/ztree/js/jquery.ztree.all.js"></script>
+    <script src="../static/js/menu.js"></script>
+
+<style>
+    html,body{
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+
+</head>
+<body>
+
+<ul id="tree" class="ztree"></ul>
+
+<ul class="list-group" id="menu" style=" width: 200px;height: 200px;display: none;position: absolute">
+    <li class="list-group-item" id="menuEdit" onclick="editTree()"><i class="glyphicon glyphicon-pencil"></i>&nbsp;修改</li>
+    <li class="list-group-item" id="menuDel" onclick="delTree()"><i class="glyphicon glyphicon-minus"></i>&nbsp;删除</li>
+    <li class="list-group-item" id="menuAdd" onclick="openAddTree()"><i class="glyphicon glyphicon-plus"></i>&nbsp;添加下级</li>
+</ul>
+<!-- 新增 -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="addModal">
+       <div class="modal-dialog" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title">添加下级</h4>
+           </div>
+               <div class="modal-body">
+                   <div style="margin: 0 auto;text-align: center;">
+                     <form id="classify">
+                         &nbsp;&nbsp;&nbsp;<span>菜单名称&nbsp;</span><input id="menuName" type="text">
+                         <br><br>
+                         &nbsp;&nbsp;&nbsp;<span>菜单链接&nbsp;</span><input id="menuLink" type="text">
+                         <br><br>
+                         &nbsp;&nbsp;&nbsp;<span>菜单图标&nbsp;</span><input id="menuIcon" type="text">
+                         <br><br>
+                         &nbsp;&nbsp;&nbsp;<span>菜单顺序&nbsp;</span><input id="menuNum" type="text">
+
+                     </form>
+                   </div>
+                </div>
+
+           <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+               <button type="button" class="btn btn-primary" onclick="Sub()">保存</button>
+           </div>
+       </div>
+       </div>
+   </div>
+<!-- 编辑 -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="editModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">菜单管理-编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div style="margin: 0 auto;text-align: center;">
+                    <form id="eclassify">
+                        &nbsp;&nbsp;&nbsp;<span>菜单名称&nbsp;</span><input id="menueName" type="text">
+                        <br><br>
+                        &nbsp;&nbsp;&nbsp;<span>菜单链接&nbsp;</span><input id="menueLink" type="text">
+                        <br><br>
+                        &nbsp;&nbsp;&nbsp;<span>菜单图标&nbsp;</span><input id="menueIcon" type="text">
+                        <br><br>
+                        &nbsp;&nbsp;&nbsp;<span>菜单顺序&nbsp;</span><input id="menueNum" type="text">
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="eSub()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 删除提示 -->
+<div id="tipModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">操作提示</h4>
+            </div>
+
+            <div class="modal-body">
+                该菜单有下级，无法删除
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</body>
+</html>

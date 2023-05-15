@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bypx.synthesis.dao.RoleInterface">
+    <insert id="addRole" parameterType="Role">
+        insert into jxc_role(id_,name_,flag_,create_time)
+                       values(#{id},#{name},#{flag},#{createTime})
+    </insert>
+    <insert id="assMenu" parameterType="RoleMENU">
+        insert into jxc_menu_role(id_,menu_id_,role_id_)
+                       values(#{id},#{menuId},#{roleId})
+    </insert>
+    <delete id="delRole" parameterType="String">
+        delete from jxc_role where id_=#{id}
+    </delete>
+    <delete id="delMenuRole">
+        delete from jxc_menu_role where role_id_=#{roleId}
+    </delete>
+    <delete id="delMenuById" parameterType="String">
+        delete from jxc_menu_role where role_id_=#{roleId}
+    </delete>
+
+    <update id="editRole">
+        update jxc_role set name_=#{name},flag_=#{flag} where id_=#{id}
+    </update>
+
+
+    <select id="queryRole" parameterType="Role" resultMap="common">
+        SELECT id_,name_,flag_,create_time FROM jxc_role
+        <where>
+            <if test="name!=null and name!=''">
+                and name_ like '%${name}%'
+            </if>
+        </where>
+        order by create_time asc
+    </select>
+    <resultMap id="common" type="Role">
+        <result column="id_" property="id"></result>
+        <result column="name_" property="name"></result>
+        <result column="flag_" property="flag"></result>
+        <result column="create_time" property="createTime"></result>
+    </resultMap>
+
+    <select id="queryRoleList" parameterType="Role" resultMap="roleList">
+        select id_,name_ from jxc_role where 1=1 order by create_time asc
+    </select>
+
+    <resultMap id="roleList" type="Role">
+        <result column="id_" property="id"></result>
+        <result column="name_" property="name"></result>
+    </resultMap>
+
+    <select id="queryAssMenu" resultMap="css">
+        select  * from jxc_menu_role where role_id_ = #{roleId}
+    </select>
+    <resultMap id="css" type="RoleMenu">
+        <result column="id_" property="id"></result>
+        <result column="menu_id_" property="menuId"></result>
+        <result column="role_id_" property="roleId"></result>
+    </resultMap>
+
+    <select id="getName" parameterType="String" resultMap="getName">
+        select id_,name_ from jxc_role where id_=#{id}
+    </select>
+    <resultMap id="getName" type="Role">
+        <id column="id_" property="id"></id>
+        <result column="name_" property="name"></result>
+    </resultMap>
+
+    <select id="getReName" parameterType="String" resultMap="ReName">
+        select id_,name_ from jxc_role where name_=#{name}
+    </select>
+    <resultMap id="ReName" type="Role">
+        <id column="id_" property="id"></id>
+        <result column="name_" property="name"></result>
+    </resultMap>
+
+    <select id="getFlag" parameterType="String" resultMap="getFlag">
+        select id_,flag_ from jxc_role where id_=#{id}
+    </select>
+    <resultMap id="getFlag" type="Role">
+        <id column="id_" property="id"></id>
+        <result column="flag_" property="flag"></result>
+    </resultMap>
+
+    <select id="getReFlag" parameterType="String" resultMap="ReFlag">
+        select id_,flag_ from jxc_role where flag_=#{flag}
+    </select>
+    <resultMap id="ReFlag" type="Role">
+        <id column="id_" property="id"></id>
+        <result column="flag_" property="flag"></result>
+    </resultMap>
+
+</mapper>

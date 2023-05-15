@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bypx.synthesis.dao.WarehousingInterface">
+    <delete id="delete" parameterType="String">
+        delete from jxc_product_order where id_=#{id}
+    </delete>
+    <update id="edit">
+        update jxc_product_order set number_=#{number},price_=#{price},status_=#{status} where id_=#{id}
+    </update>
+
+    <select id="query" parameterType="Outbound" resultMap="common">
+        SELECT id_,type_id_,number_,price_,order_type_,status_,cause_,creater_,creater_id_,DATE_FORMAT(create_date_,'%Y-%m-%d') AS create_date_
+        FROM jxc_product_order
+        <where>
+            and creater_id_=#{creatorId}
+
+            <if test="orderType!=2">
+                and order_type_=1 and  status_ in(1,2)
+            </if>
+
+            <if test="typeId !=null and typeId!=''">
+                and type_id_ like '%${typeId}%'
+            </if>
+
+
+            <if test="createTime !=null">
+                and order by create_date_ DESC
+            </if>
+        </where>
+    </select>
+    <resultMap id="common" type="Outbound">
+        <result column="id_" property="id"></result>
+        <result column="type_id_" property="typeId"></result>
+        <result column="number_" property="number"></result>
+        <result column="price_" property="price"></result>
+        <result column="order_type_" property="orderType"></result>
+        <result column="status_" property="status"></result>
+        <result column="create_date_" property="createTime"></result>
+        <result column="creater_" property="creator"></result>
+        <result column="creater_id_" property="creatorId"></result>
+        <result column="cause_" property="cause"></result>
+    </resultMap>
+</mapper>
